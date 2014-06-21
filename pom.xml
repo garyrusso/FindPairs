@@ -4,11 +4,11 @@
   	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.garyrusso</groupId>
-	<artifactId>InvertedIndex</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<artifactId>FindPairs</artifactId>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 	
-	<name>InvertedIndex</name>
+	<name>FindPairs</name>
 	<url>http://maven.apache.org</url>
 	
 	<properties>
@@ -36,7 +36,7 @@
 		            <manifest>
 		              <addClasspath>true</addClasspath>
 		              <classpathPrefix>lib/</classpathPrefix>
-		              <mainClass>org.garyrusso.InvertedIndex</mainClass>
+		              <mainClass>org.garyrusso.FindPairs</mainClass>
 		            </manifest>
 		          </archive>
 				</configuration>

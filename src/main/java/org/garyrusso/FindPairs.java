@@ -115,6 +115,13 @@ public class FindPairs {
 		}
 	}
 	
+	public String createHashKey(String str1, String str2) {
+		
+		String key = str1 + "-" + str2;
+		
+		return key;
+	}
+	
 	public void buildPairsListById(int id)
 	{
 		List<String> words = new ArrayList<String>();
@@ -135,9 +142,9 @@ public class FindPairs {
 		for (int i = 0; i < words.size(); i++)
 		{
 			if (i == words.size()-1)
-				pairKey = words.get(0) + "-" + words.get(words.size()-1);
+				pairKey = createHashKey(words.get(0), words.get(words.size()-1));
 			else
-				pairKey = words.get(i) + "-" + words.get(i+1);
+				pairKey = createHashKey(words.get(i), words.get(i+1));
 		
 			Integer pairCount = wordPairs.get(pairKey);
 	
@@ -161,7 +168,7 @@ public class FindPairs {
 		 * 
 		 * */
 		
-		String[] args = { "C:/projects/knewton/docs/test2.txt" };
+		String[] args = { "D:/projects/knewton/docs/test2.txt" };
 
 		try
 		{
@@ -172,7 +179,7 @@ public class FindPairs {
 				idx.indexFile(new File(args[i]));
 			}
 			
-			for (int i = 1; i < idx.getWordListCount() +1; i++)
+			for (int i = 1; i < idx.getWordListCount() + 1; i++)
 			{
 				idx.buildPairsListById(i);
 			}

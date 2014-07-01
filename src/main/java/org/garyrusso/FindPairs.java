@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,10 +12,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
- * Find Pairs - Co-occurence
+ * Find Pairs - Artist Co-occurence
+ * 
+ * @author Gary Russo
  *
  */
 
@@ -101,10 +105,12 @@ public class FindPairs {
 			}
 		}
 
+		NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
+
 		System.out.println("");
 		System.out.println("indexed file:      " + file.getPath());
-		System.out.println("artist list count: " + phraseListNum);
-		System.out.println("artist count:      " + phraseIndex.size());
+		System.out.println("artist list count: " + numberFormatter.format(phraseListNum));
+		System.out.println("artist count:      " + numberFormatter.format(phraseIndex.size()));
 	}
 
 	public void search(List<String> phrases)
@@ -128,7 +134,7 @@ public class FindPairs {
 		}
 	}
 
-	public int getPhraseListCount()
+	private int getPhraseListCount()
 	{
 		return phraseListNum;
 	}
@@ -146,8 +152,8 @@ public class FindPairs {
 
 		for (PairTuple t : pairTuples)
 		{
-			if (t.count > 1)
-			//if (t.count > 49)
+			//if (t.count > 1)
+			if (t.count > 49)
 			{
 				System.out.println(t.pair + " / " + t.count);
 			}
@@ -210,8 +216,17 @@ public class FindPairs {
 		
 			PairTuple pairTuple = phrasePairs.get(pairKey);
 			
-			String pair = phrases.get(phrasedIdx1) + ", " + phrases.get(phrasedIdx2);
-	
+			// Sort the original phrase to be consistent.
+			String phrase1 = phrases.get(phrasedIdx1);
+			String phrase2 = phrases.get(phrasedIdx2);
+
+			String pair = "";
+			
+			if (phrase1.toLowerCase().compareTo(phrase2.toLowerCase()) > 0)
+				pair = phrase2 + ", " + phrase1;
+			else
+				pair = phrase1 + ", " + phrase2;
+			
 			//System.out.println("list " + listId + " : phrase: " + pair + " : pairKey: " + pairKey);
 
 			if (pairTuple == null)
@@ -240,7 +255,7 @@ public class FindPairs {
 	    return createPairsList(id, list.subList(1, list.size()));
 	}
 
-	public static void main(String[] args1)
+	public static void main(String[] args)
 	{
 		/*
 		 * Read phrase lists
@@ -249,8 +264,8 @@ public class FindPairs {
 		 * 
 		 * */
 		
-		//String[] args = { "D:/projects/knewton/docs/Artist_lists_small.txt" };
-		String[] args = { "D:/projects/knewton/docs/test3.txt" };
+		//String[] args = { "C:/projects/knewton/docs/Artist_lists_small.txt" };
+		//String[] args = { "C:/projects/knewton/docs/test1.txt" };
 
 		try
 		{
@@ -268,7 +283,8 @@ public class FindPairs {
 				idx.buildPairsListById(i);
 			}
 			
-			System.out.println("artist pair count: " + idx.phrasePairs.size());
+			NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
+			System.out.println("artist pair count: " + numberFormatter.format(idx.phrasePairs.size()));
 			System.out.println("");
 			
 			idx.printPairsList();

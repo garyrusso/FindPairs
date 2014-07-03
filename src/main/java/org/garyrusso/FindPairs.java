@@ -104,13 +104,6 @@ public class FindPairs {
 				idx.add(new PhraseTriple(_phrase, phraseListNum, pos));
 			}
 		}
-
-		NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
-
-		System.out.println("");
-		System.out.println("indexed file:      " + file.getPath());
-		System.out.println("artist list count: " + numberFormatter.format(phraseListNum));
-		System.out.println("artist count:      " + numberFormatter.format(phraseIndex.size()));
 	}
 
 	public void search(List<String> phrases)
@@ -155,7 +148,7 @@ public class FindPairs {
 			//if (t.count > 1)
 			if (t.count > 49)
 			{
-				System.out.println(t.pair + " / " + t.count);
+				System.out.println(t.pair + " : " + t.count);
 			}
 		}
 	}
@@ -254,6 +247,24 @@ public class FindPairs {
 		
 	    return createPairsList(id, list.subList(1, list.size()));
 	}
+	
+	private void displayResults(String[] args)
+	{
+		NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
+
+		System.out.println("");
+		for (int i = 0; i < args.length; i++)
+		{
+			System.out.println("indexed file:      " + args[i]);
+		}
+		System.out.println("");
+		System.out.println("artist list count:   " + numberFormatter.format(getPhraseListCount()));
+		System.out.println("artist count:       " + numberFormatter.format(phraseIndex.size()));
+		System.out.println("artist pair count: " + numberFormatter.format(phrasePairs.size()));
+		System.out.println("");
+		
+		printPairsList();
+	}
 
 	public static void main(String[] args)
 	{
@@ -283,11 +294,8 @@ public class FindPairs {
 				idx.buildPairsListById(i);
 			}
 			
-			NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
-			System.out.println("artist pair count: " + numberFormatter.format(idx.phrasePairs.size()));
-			System.out.println("");
-			
-			idx.printPairsList();
+			// Pass 3 - print Pair Phrases (artist pairs) to stdout.
+			idx.displayResults(args);
 		}
 		catch (Exception e)
 		{

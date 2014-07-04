@@ -18,7 +18,13 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Find Pairs - Artist Co-occurence
+ * Find Artist Pairs - Uses a Phrase Index to Phrase Pairs.
+ * 
+ * Finding common "phrase pairs" is also known as co-occurrence.
+ * 
+ * In this case, a "word phrase" is a specific artist.
+ * 
+ * This program will read one or more UTF-8 encoded files. Each file contains lists of artists.
  * 
  * @author Gary Russo
  *
@@ -26,6 +32,18 @@ import java.util.Map;
 
 public class FindPairs {
 
+	/* phraseIndex is an Inverted Index.
+	 * 
+	 * An Inverted Index is a commonly used data structure used in natural language processors.
+	 * In this case, its a phrase lookup table that maps all phrases (artists) to a specific list and to a position within the list.
+	 * The hash key is the lower cased artist name which ensures uniqueness.
+	 * 
+	 * phrasePair is similar to phraseIndex but only stores the Artist Pair and the pair count.
+	 * phrasePair hash key used is the combination of the 2 lower cased artist names in alphanumeric order.
+	 * 
+	 * phraseIndex list will be much smaller than the phrasePair index.
+	 */
+	
 	Map<String, List<PhraseTriple>> phraseIndex = new HashMap<String, List<PhraseTriple>>();
 	Map<String, PairTuple>          phrasePairs = new HashMap<String, PairTuple>();
 
@@ -77,6 +95,12 @@ public class FindPairs {
 	    }
 	}
 	
+    /**
+     * Default No Argument Constructor
+     */
+    public FindPairs() {
+    }
+
 	private void indexFile(File file) throws IOException
 	{
 		int pos = 0;
@@ -100,6 +124,8 @@ public class FindPairs {
 				if (idx == null)
 				{
 					idx = new LinkedList<PhraseTriple>();
+					
+					//hash key is the lower cased phrase (artist).
 					phraseIndex.put(phrase, idx);
 				}
 

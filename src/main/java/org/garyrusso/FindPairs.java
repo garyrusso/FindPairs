@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +77,7 @@ public class FindPairs {
 	    }
 	}
 	
-	public void indexFile(File file) throws IOException
+	private void indexFile(File file) throws IOException
 	{
 		int pos = 0;
 
@@ -106,7 +108,7 @@ public class FindPairs {
 		}
 	}
 
-	public void search(List<String> phrases)
+	private void search(List<String> phrases)
 	{
 		for (String _phrase : phrases)
 		{
@@ -132,28 +134,7 @@ public class FindPairs {
 		return phraseListNum;
 	}
 	
-	public void printPairsList()
-	{
-		List<PairTuple> pairTuples = new ArrayList<PairTuple>();
-		
-		for (HashMap.Entry<String, PairTuple> pairEntry : phrasePairs.entrySet())
-		{
-			pairTuples.add(pairEntry.getValue());
-		}
-		
-		Collections.sort(pairTuples, new PairTupleComparator());
-
-		for (PairTuple t : pairTuples)
-		{
-			//if (t.count > 1)
-			if (t.count > 49)
-			{
-				System.out.println(t.pair + " : " + t.count);
-			}
-		}
-	}
-
-	public String createHashKey(String str1, String str2)
+	private String createHashKey(String str1, String str2)
 	{
 		
 		String key = "";
@@ -169,7 +150,7 @@ public class FindPairs {
 		return key;
 	}
 	
-	public void buildPairsListById(int id)
+	private void buildPairsListById(int id)
 	{
 		List<String> phrases = new ArrayList<String>();
 		
@@ -193,7 +174,7 @@ public class FindPairs {
 		//System.out.println("list size: " + list.size());
 	}
 
-	public void addPairsHelper(int listId, List<String> phrases)
+	private void addPairsHelper(int listId, List<String> phrases)
 	{
 		String pairKey = "";
 		
@@ -233,7 +214,7 @@ public class FindPairs {
 		}
 	}
 	
-	public List<String> createPairsList(int id, List<String> list)
+	private List<String> createPairsList(int id, List<String> list)
 	{
 	    //for (String p : list)
 	    //{
@@ -264,6 +245,43 @@ public class FindPairs {
 		System.out.println("");
 		
 		printPairsList();
+	}
+
+	private void printPairsList()
+	{
+		List<PairTuple> pairTuples = new ArrayList<PairTuple>();
+		
+		for (HashMap.Entry<String, PairTuple> pairEntry : phrasePairs.entrySet())
+		{
+			pairTuples.add(pairEntry.getValue());
+		}
+		
+		Collections.sort(pairTuples, new PairTupleComparator());
+
+		for (PairTuple t : pairTuples)
+		{
+			if (t.count > 49)
+			{
+				printUtf8Line(t.pair + " : " + t.count);
+			}
+		}
+	}
+
+	private void printUtf8Line(String out)
+	{
+        PrintStream ps;
+        
+		try
+		{
+			ps = new PrintStream(System.out, true, "UTF-8");
+	        //System.out.println(out);
+	        ps.println(out);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			System.out.println("Unsupported UTF-8 code");
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args)

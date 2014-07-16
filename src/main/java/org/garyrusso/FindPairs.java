@@ -44,8 +44,8 @@ public class FindPairs {
 	 * phraseIndex list will be much smaller than the phrasePair index.
 	 */
 	
-	Map<String, List<PhraseTriple>> phraseIndex = new HashMap<String, List<PhraseTriple>>();
-	Map<String, PairTuple>          phrasePairs = new HashMap<String, PairTuple>();
+	private Map<String, List<PhraseTriple>> phraseIndex = new HashMap<String, List<PhraseTriple>>();
+	private Map<String, PairTuple>          phrasePairs = new HashMap<String, PairTuple>();
 
 	private int phraseListNum = 0;
 
@@ -134,27 +134,6 @@ public class FindPairs {
 		}
 	}
 
-	private void search(List<String> phrases)
-	{
-		for (String _phrase : phrases)
-		{
-			String phrase = _phrase.toLowerCase();
-			List<PhraseTriple> idx = phraseIndex.get(phrase);
-			
-			System.out.println("\nsearch phrase: " + phrase);
-			System.out.println("index size: " + idx.size());
-			System.out.println("phrase list size: " + phraseIndex.size());
-
-			if (idx != null)
-			{
-				for (PhraseTriple t : idx)
-				{
-					System.out.println("phrase: " + _phrase + " | position: " + t.position + " | listno: " + t.listno);
-				}
-			}
-		}
-	}
-
 	private int getPhraseListCount()
 	{
 		return phraseListNum;
@@ -196,8 +175,6 @@ public class FindPairs {
 		Arrays.sort(phrases.toArray());
 		
 	    List<String> list = createPairsList(id, phrases);
-	    
-		//System.out.println("list size: " + list.size());
 	}
 
 	private void addPairsHelper(int listId, List<String> phrases)
@@ -258,16 +235,17 @@ public class FindPairs {
 	private void displayResults(String[] args)
 	{
 		NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
-
+		
 		System.out.println("");
 		for (int i = 0; i < args.length; i++)
 		{
 			System.out.println("indexed file:      " + args[i]);
 		}
+		
 		System.out.println("");
-		System.out.println("artist list count:   " + numberFormatter.format(getPhraseListCount()));
-		System.out.println("artist count:       " + numberFormatter.format(phraseIndex.size()));
-		System.out.println("artist pair count: " + numberFormatter.format(phrasePairs.size()));
+		System.out.println("artist list count: " + String.format("%1$" + 7 + "s", numberFormatter.format(getPhraseListCount())));
+		System.out.println("artist count:      " + String.format("%1$" + 7 + "s", numberFormatter.format(phraseIndex.size())));
+		System.out.println("artist pair count: " + String.format("%1$" + 7 + "s", numberFormatter.format(phrasePairs.size())));
 		System.out.println("");
 		
 		printPairsList();

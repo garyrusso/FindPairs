@@ -49,6 +49,9 @@ public class FindPairs {
 
 	private int phraseListNum = 0;
 
+	/**
+	 * Inner Class
+	 */
 	private class PhraseTriple
 	{
 		private String phrase;
@@ -63,6 +66,9 @@ public class FindPairs {
 		}
 	}
 
+	/**
+	 * Inner Class
+	 */
 	private class PairTuple
 	{
 		private String pair;
@@ -75,6 +81,9 @@ public class FindPairs {
 		}
 	}
 
+	/**
+	 * Inner Class
+	 */
 	private class PairTupleComparator implements Comparator<PairTuple>
 	{
 	    @Override
@@ -101,6 +110,9 @@ public class FindPairs {
     public FindPairs() {
     }
 
+	/**
+	 * Indexer
+	 */
 	private void indexFile(File file) throws IOException
 	{
 		int pos = 0;
@@ -134,11 +146,17 @@ public class FindPairs {
 		}
 	}
 
+	/**
+	 * List Count Getter
+	 */
 	private int getPhraseListCount()
 	{
 		return phraseListNum;
 	}
 	
+	/**
+	 * Hash Key Generator
+	 */
 	private String createHashKey(String str1, String str2)
 	{
 		
@@ -155,6 +173,9 @@ public class FindPairs {
 		return key;
 	}
 	
+	/**
+	 *
+	 */
 	private void buildPairsListById(int id)
 	{
 		List<String> phrases = new ArrayList<String>();
@@ -177,6 +198,9 @@ public class FindPairs {
 	    List<String> list = createPairsList(id, phrases);
 	}
 
+	/**
+	 *
+	 */
 	private void addPairsHelper(int listId, List<String> phrases)
 	{
 		String pairKey = "";
@@ -217,6 +241,9 @@ public class FindPairs {
 		}
 	}
 	
+	/**
+	 *
+	 */
 	private List<String> createPairsList(int id, List<String> list)
 	{
 	    //for (String p : list)
@@ -232,6 +259,9 @@ public class FindPairs {
 	    return createPairsList(id, list.subList(1, list.size()));
 	}
 	
+	/**
+	 *
+	 */
 	private void displayResults(String[] args)
 	{
 		NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.US);
@@ -251,6 +281,9 @@ public class FindPairs {
 		printPairsList();
 	}
 
+	/**
+	 *
+	 */
 	private void printPairsList()
 	{
 		List<PairTuple> pairTuples = new ArrayList<PairTuple>();
@@ -271,6 +304,9 @@ public class FindPairs {
 		}
 	}
 
+	/**
+	 *
+	 */
 	private void printUtf8Line(String out)
 	{
         PrintStream ps;
@@ -288,6 +324,9 @@ public class FindPairs {
 		}
 	}
 
+	/**
+	 *
+	 */
 	public static void main(String[] args)
 	{
 		/*
